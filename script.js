@@ -1,9 +1,15 @@
-let addBtn = document.querySelector(".add-btn");
-let removeBtn = document.querySelector(".remove-btn");
+let addBtn = document.querySelector(".add");
+
+let removeBtn = document.querySelector(".delete");
+
 let mainCont = document.querySelector(".main-cont");
-let modalCont = document.querySelector(".modal-cont");
+
+let modalCont = document.querySelector(".change");
+
 let textareaCont = document.querySelector(".textarea-cont");
+
 let allPriorityColor = document.querySelectorAll(".priority-color");
+
 let toolboxColor = document.querySelectorAll(".color");
 
 let colors = ["lightpink", "lightblue", "lightgreen", "black"];
@@ -20,7 +26,8 @@ let ticketArr = [];
 if(localStorage.getItem("jira_tickets")){
     //retrieve and display tickets
     ticketArr = JSON.parse(localStorage.getItem("jira_tickets"));
-    ticketArr.forEach((ticketObj) =>{
+    ticketArr.forEach((ticketObj) =>
+    {
         createTicket(ticketObj.ticketColor , ticketObj.ticketTask , ticketObj.ticketID);
     })
 }
@@ -68,19 +75,7 @@ allPriorityColor.forEach((ColorElem, idx) => {
     })
 })
 
-addBtn.addEventListener("click", (e) => {
-    //Display Modal
-    //Generate ticket
-    console.log("Vibhu");
-    //Addflag , true -> Modal Display
-    //Addflag , false -> Modal None;
-    addFlag = !addFlag;
-    if (addFlag) {
-        modalCont.style.display = "flex";
-    } else {
-        modalCont.style.display = "none";
-    }
-})
+
 
 removeBtn.addEventListener("click", (e) => {
     removeFlag = !removeFlag;
@@ -89,46 +84,30 @@ removeBtn.addEventListener("click", (e) => {
 
 modalCont.addEventListener("keydown", (e) => {
     let key = e.key;
-    if (key === "Shift") {
+    if (key === "Enter") {
         createTicket(modalPriorityColor, textareaCont.value);
         addFlag = false;
         setModalToDefault();
     }
 })
+addBtn.addEventListener("click", (e) => {
 
-function createTicket(ticketColor, ticketTask, ticketID) {
-    let id = ticketID || shortid();
-    let ticketCont = document.createElement("div");
-    ticketCont.setAttribute("class", "ticket-cont");
-    ticketCont.innerHTML = `
-    <div class = "ticket-color ${ticketColor}"></div>
-    <div class="ticket-id">#${ticketID}</div>
-    <div class="task-area">${ticketTask}</div>
-    <div class="ticket-lock">
-        <i class="fa-solid fa-lock"></i>
-    </div>
-    `;
-    mainCont.appendChild(ticketCont);
-
-    // create Object of ticket and add to array 
-    if(!ticketID) {
-        
-        ticketArr.push({ticketColor , ticketTask , ticketID : id});
-        localStorage.setItem("jira_tickets",JSON.stringify(ticketArr));
+    addFlag = !addFlag;
+    if (addFlag) {
+        modalCont.style.display = "flex";
+    } else {
+        modalCont.style.display = "none";
     }
+})
 
-    handleRemoval(ticketCont ,id);
-    handleLock(ticketCont , id);
-    handleColor(ticketCont , id);
-}
 
 function handleRemoval(ticket , id) {
-    //removeFlag -> true -> remove
+    
     ticket.addEventListener("click" , (e) =>{
         if(!removeFlag) return ;
         
         let idx = getTicketIdx(id);
-        //DB removal
+      
         ticketArr.splice(idx , 1);
         let strTicketArr = JSON.stringify(ticketArr);
         localStorage.setItem("jira_tickets", strTicketArr);
@@ -152,20 +131,54 @@ function handleLock(ticket , id) {
             ticketLock.classList.add(lockClass);
             ticketTaskArea.setAttribute("contentedittable", "true");
         }
-        //Modify data in localStorage (Ticket Task)
+        
         ticketArr[ticketIdx].ticketTask = ticketTaskArea.innerText;
         localStorag.setItem("jira_tickets",JSON.stringify(ticketArr));
     })
+}
+function setModalToDefault(){
+    modalCont.style.display = "none";
+    textareaCont.value = "";
+    allPriorityColor.forEach((priorityColorElem, idx) => {
+        priorityColorElem.classList.remove("border");
+    })
+    allPriorityColor[allPriorityColor.length - 1].classList.add("border");
+
+}
+function createTicket(ticketColor, ticketTask, ticketID) {
+    let id = ticketID || shortid();
+    let ticketCont = document.createElement("div");
+    ticketCont.setAttribute("class", "ticket-cont");
+    ticketCont.innerHTML = `
+    <div class = "ticket-color ${ticketColor}"></div>
+    <div class="ticket-id">#${ticketID}</div>
+    <div class="task-area">${ticketTask}</div>
+    <div class="ticket-lock">
+        <i class="fa-solid fa-lock"></i>
+    </div>
+    `;
+    mainCont.appendChild(ticketCont);
+
+    
+    if(!ticketID) {
+        
+        ticketArr.push({ticketColor , ticketTask , ticketID : id});
+        localStorage.setItem("jira_tickets",JSON.stringify(ticketArr));
+    }
+
+    handleRemoval(ticketCont ,id);
+    handleLock(ticketCont , id);
+    handleColor(ticketCont , id);
 }
 
 function handleColor(ticket ,id) {
     let ticketColor = ticket.querySelector(".ticket-color");
     ticketColor.addEventListener("click", (e) => {
-        // Get ticket index from the ticket array
+       
         let ticketIdx = getTicketIdx(id);
         
         let currentTicketColor = ticketColor.classList[1];
-        // get ticket color idx
+      
         let currentTicketColorIdx = colors.findIndex((color) => {
             return currentTicketColor === color;
         })
@@ -175,7 +188,7 @@ function handleColor(ticket ,id) {
         ticketColor.classList.remove(currentTicketColor);
         ticketColor.classList.add(newTicketColor);
 
-        //Modify data in localStorage  (priority color change)
+       
         ticketArr[ticketIdx].ticketColor = newTicketColor;
         localStorage.setItem("jira_tickets" , JSON.stringify(ticketArr));
     })  
@@ -186,14 +199,4 @@ function getTicketIdx(id) {
         return ticketObj.ticketID == id;
     })
     return ticketIdx;
-}
-
-function setModalToDefault(){
-    modalCont.style.display = "none";
-    textareaCont.value = "";
-    allPriorityColor.forEach((priorityColorElem, idx) => {
-        priorityColorElem.classList.remove("border");
-    })
-    allPriorityColor[allPriorityColor.length - 1].classList.add("border");
-
 }
