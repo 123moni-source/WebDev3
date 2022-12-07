@@ -7,19 +7,19 @@ body {
     padding: 0;
 }
 
-.tbx{
+.toolbox-cont {
     height: 5rem;
     background-color: #576574;
     display: flex;
     align-items: center;
 }
 
-.tbx>* {
+.toolbox-cont>* {
     margin-left: 4rem;
     border-radius: 2px;
 }
 
-.tbx-p {
+.toolbox-priority-cont {
     height: 3.5rem;
     width: 14rem;
     background-color: #8395a7;
@@ -28,14 +28,14 @@ body {
     align-items: center;
 }
 
-.click{
+.action-btn-cont {
     height: 3.5rem;
     width: 6rem;
-    background-color: #8395a7;
+    background-color: #1c2134;
     display: flex;
 }
 
-.click>* {
+.action-btn-cont>* {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -44,34 +44,34 @@ body {
     color: #c8d6e5;
 }
 
-/* .color {
+.color {
     height: 1.2rem;
     width: 2rem;
     background-color: #dfe4ea;
     border-radius: 2px;
-} */
-
-.pink {
-    background-color: rgb(229, 177, 236);
 }
 
-.blue {
-    background-color: rgb(38, 118, 145);
+.lightpink {
+    background-color: lightpink;
 }
 
-.green {
-    background-color: rgb(42, 218, 42);
+.lightblue {
+    background-color: lightblue;
+}
+
+.lightgreen {
+    background-color: lightgreen;
 }
 
 .black {
-    background-color: rgba(0, 0, 0, 0.829);
+    background-color: black;
 }
 
-.click>*:hover {
-    background: white;
+.action-btn-cont>*:hover {
+    background: rgb(129, 139, 158);
 }
 
-.supplement {
+.modal-cont {
     height: 50vh;
     width: 45vw;
     background-color: #576574;
@@ -80,25 +80,26 @@ body {
     left: calc((100vw - 45vw)/2);
     display: none;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    
 }
 
-.tc {
+.textarea-cont {
     height: 100%;
     width: 75%;
     border: none;
     outline: none;
-    background-color: #576574;
+    background-color: #ffffff;
     resize: none;
     padding: 2rem;
     font-size: 1.5rem;
-    color:white;
+    color:black;
 }
 textarea::-webkit-input-placeholder {
-    color: white;
+    color: rgb(90, 101, 138);
   }
   
 
-.priority-colors-cont{
+.priority-colors-cont {
     height: 100%;
     width: 25%;
     background-color: #8395a7;
@@ -109,38 +110,39 @@ textarea::-webkit-input-placeholder {
 }
 
 .priority-color {
-    height: 3rem;
-    width: 55%;
+    height: 19%;
+    width: 65%;
+    border: 8px solid white;
 }
 
 .border {
-    border: 5px solid #f5f6fa;
+    border: 8px solid #3f9733;
 }
 
-.card-cont {
+.ticket-cont {
     height: 13rem;
     width: 16rem;
     background-color: #4b4b4b;
 }
 
-.card-color {
+.ticket-color {
     height: 1rem;
 }
 
-.card-id {
+.ticket-id {
     height: 2rem;
     background-color: #dfe4ea;
     padding: 0.4rem;
 }
 
-.card-width {
+.task-area {
     height: calc(100% - 1rem - 2rem - 2rem);
     background-color: #dfe4ea;
     padding: 0.4rem;
     outline: none;
 }
 
-.card-l {
+.ticket-lock {
     height: 2rem;
     display: flex;
     background-color: #dfe4ea;
@@ -150,7 +152,7 @@ textarea::-webkit-input-placeholder {
     justify-content: flex-end;
 }
 
-.colours-p{
+.main-cont {
     display: flex;
     flex-wrap: wrap;
     padding: 2rem;
@@ -158,7 +160,7 @@ textarea::-webkit-input-placeholder {
     justify-content: center;
 }
 
-/* @media screen and (min-width :425px) and (max-width : 768px) {
+@media screen and (min-width :425px) and (max-width : 768px) {
     .modal-cont {
         width: 60vw;
         left: calc( ( 100vw - 60vw ) / 2);
@@ -190,4 +192,4 @@ textarea::-webkit-input-placeholder {
         margin-left: 2rem;
         border-radius: 2px;
     }
-} */
+}
